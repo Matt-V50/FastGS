@@ -36,7 +36,6 @@ from utils.fast_utils import compute_gaussian_score_fastgs, sampling_cameras
 
 def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoint_iterations, checkpoint, debug_from, websockets):
     first_iter = 0
-    tb_writer = prepare_output_and_logger(dataset)
     gaussians = GaussianModel(dataset.sh_degree, opt.optimizer_type)
     scene = Scene(dataset, gaussians)
     gaussians.training_setup(opt)
@@ -272,7 +271,7 @@ if __name__ == "__main__":
     if(args.websockets):
         network_gui_ws.init(args.ip, args.port)
     torch.autograd.set_detect_anomaly(args.detect_anomaly)
-    
+    tb_writer = prepare_output_and_logger(args)
     training(
         lp.extract(args), 
         op.extract(args), 
