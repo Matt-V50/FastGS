@@ -184,9 +184,9 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
     print(f"Training time: {total_time}, Rendering time: {total_render_time}, Optimization time: {total_optim_time}")
     with open(os.path.join(args.model_path, "training_time.json"), 'w') as f:
         json.dump({
-            "total_time": total_time,
-            "rendering_time": total_render_time,
-            "optimization_time": total_optim_time
+            "train_times": total_time,
+            "train_render_times": total_render_time,
+            "train_optimal_times": total_optim_time
         }, f)
     
     
