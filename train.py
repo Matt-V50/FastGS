@@ -9,6 +9,7 @@
 # For inquiries contact  george.drettakis@inria.fr
 #
 
+import json
 import torch
 import numpy as np
 import os, random, time
@@ -56,6 +57,8 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
     optim_start = torch.cuda.Event(enable_timing=True)
     optim_end = torch.cuda.Event(enable_timing=True)
     total_time = 0.0
+    total_render_time = 0.0
+    total_optim_time = 0.0
 
     ema_loss_for_log = 0.0
     progress_bar = tqdm(range(first_iter, opt.iterations), desc="Training progress")
@@ -173,10 +176,19 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
             torch.cuda.synchronize()
             optim_time = optim_start.elapsed_time(optim_end)
             total_time += (iter_time + optim_time) / 1e3
+            total_render_time += iter_time / 1e3
+            total_optim_time += optim_time / 1e3
 
     # scene.save(iteration)
     print(f"Gaussian number: {gaussians._xyz.shape[0]}")
-    print(f"Training time: {total_time}")
+    print(f"Training time: {total_time}, Rendering time: {total_render_time}, Optimization time: {total_optim_time}")
+    with open(os.path.join(args.model_path, "training_time.json"), 'w') as f:
+        json.dump({
+            "total_time": total_time,
+            "rendering_time": total_render_time,
+            "optimization_time": total_optim_time
+        }, f)
+    
     
 def prepare_output_and_logger(args):    
     if not args.model_path:

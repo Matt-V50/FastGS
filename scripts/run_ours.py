@@ -17,9 +17,9 @@ def get_train_cmd_big(input, output, image_dir=None):
     optimizer_type = "default"    # 优化器类型
 
     # 路径配置
-    image_root = f"/home/matt/civss/Matt/Dataset/{input}"  # Blendswap/Render/pick/13078_toad
-    output_base_dir = f"/home/matt/civss/Matt/GS-Output"
-    output_full_dir = f"{output_base_dir}/FastGS/{output}"  # pick/13078_toad
+    image_root = f"/home/matt/cviss/Matt/Dataset/{input}"  # Blendswap/Render/pick/13078_toad
+    output_base_dir = f"/home/matt/cviss/Matt/GS-Output"
+    output_full_dir = f"{output_base_dir}/FastGS-Big/{output}"  # pick/13078_toad
 
     # ============================================================
     # FastGS 训练命令
@@ -63,8 +63,8 @@ def get_train_cmd_base(input, output, image_dir=None):
     optimizer_type = "default"    # 优化器类型
 
     # 路径配置
-    image_root = f"/home/matt/civss/Matt/Dataset/{input}"  # Blendswap/Render/pick/13078_toad
-    output_base_dir = f"/home/matt/civss/Matt/GS-Output"
+    image_root = f"/home/matt/cviss/Matt/Dataset/{input}"  # Blendswap/Render/pick/13078_toad
+    output_base_dir = f"/home/matt/cviss/Matt/GS-Output"
     output_full_dir = f"{output_base_dir}/FastGS-Base/{output}"  # pick/13078_toad
 
     # ============================================================
@@ -140,12 +140,34 @@ def run_with_live_output(cmd):
     os.close(master_fd)
     return process.returncode, ''.join(output_lines)
 
-# cmd, eval_cmd = get_train_cmd_base(input="Blendswap/Render/pick/13078_toad", output="Blendswap/pick/13078_toad", image_dir=None)
+cmd, eval_cmd = get_train_cmd_base(input="Blendswap/Render/pick/13078_toad", output="Blendswap/pick/13078_toad", image_dir=None)
 
-# run_with_live_output(cmd)
-# run_with_live_output(eval_cmd)
+run_with_live_output(cmd)
+run_with_live_output(eval_cmd)
+
+cmd, eval_cmd = get_train_cmd_big(input="Blendswap/Render/pick/13078_toad", output="Blendswap/pick/13078_toad", image_dir=None)
+
+run_with_live_output(cmd)
+run_with_live_output(eval_cmd)
+
+
+cmd, eval_cmd = get_train_cmd_base(input="Rogers/Tower_0529", output="Rogers/Tower_0529_4", image_dir="images_4")
+
+run_with_live_output(cmd)
+run_with_live_output(eval_cmd)
+
 
 cmd, eval_cmd = get_train_cmd_big(input="Rogers/Tower_0529", output="Rogers/Tower_0529_4", image_dir="images_4")
+
+run_with_live_output(cmd)
+run_with_live_output(eval_cmd)
+
+cmd, eval_cmd = get_train_cmd_base(input="Rogers/Tower_0529", output="Rogers/Tower_0529_8", image_dir="images_8")
+
+run_with_live_output(cmd)
+run_with_live_output(eval_cmd)
+
+cmd, eval_cmd = get_train_cmd_big(input="Rogers/Tower_0529", output="Rogers/Tower_0529_8", image_dir="images_8")
 
 run_with_live_output(cmd)
 run_with_live_output(eval_cmd)
